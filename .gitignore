@@ -1,0 +1,12 @@
+# Bonita Studio
+.metadata/
+bonita/
+*.log
+tmp/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# RabbitMQ (datos de runtime si se montaran volúmenes)
+rabbitmq/data/

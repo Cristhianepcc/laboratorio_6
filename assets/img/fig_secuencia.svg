@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="440" viewBox="0 0 1000 440" font-family="'Segoe UI',Arial,sans-serif">
+  <rect width="1000" height="440" fill="#ffffff"/>
+  <text x="500" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2937">Diagrama de secuencia — intercambio verificado por RabbitMQ</text>
+
+  <defs>
+    <marker id="s" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#374151"/></marker>
+  </defs>
+
+  <!-- actores -->
+  <rect x="70" y="60" width="180" height="40" rx="8" fill="#eef2ff" stroke="#4f46e5"/>
+  <text x="160" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#3730a3">Proceso 1 (RSE)</text>
+  <rect x="410" y="60" width="180" height="40" rx="8" fill="#f3f4f6" stroke="#9ca3af"/>
+  <text x="500" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#4b5563">RabbitMQ</text>
+  <rect x="750" y="60" width="180" height="40" rx="8" fill="#ecfdf5" stroke="#059669"/>
+  <text x="840" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#065f46">Proceso 2 (Proveedor)</text>
+
+  <!-- lifelines -->
+  <line x1="160" y1="100" x2="160" y2="410" stroke="#c7c7c7" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="500" y1="100" x2="500" y2="410" stroke="#c7c7c7" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="840" y1="100" x2="840" y2="410" stroke="#c7c7c7" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+  <!-- 1 publish convocatoria -->
+  <line x1="160" y1="150" x2="498" y2="150" stroke="#374151" stroke-width="2" marker-end="url(#s)"/>
+  <text x="330" y="142" text-anchor="middle" font-size="12" fill="#374151">1. publish rse.convocatorias  →  {"routed":true}</text>
+
+  <!-- 2 get convocatoria -->
+  <line x1="840" y1="200" x2="502" y2="200" stroke="#374151" stroke-width="2" marker-end="url(#s)"/>
+  <text x="670" y="192" text-anchor="middle" font-size="12" fill="#374151">2. get rse.convocatorias</text>
+  <line x1="500" y1="222" x2="838" y2="222" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#s)"/>
+  <text x="670" y="240" text-anchor="middle" font-size="11" fill="#6b7280">payload: {codigo:RSE-2026-001, ...}</text>
+
+  <!-- 3 publish postulacion -->
+  <line x1="840" y1="285" x2="502" y2="285" stroke="#374151" stroke-width="2" marker-end="url(#s)"/>
+  <text x="670" y="277" text-anchor="middle" font-size="12" fill="#374151">3. publish rse.postulaciones  →  {"routed":true}</text>
+
+  <!-- 4 get postulacion -->
+  <line x1="160" y1="335" x2="498" y2="335" stroke="#374151" stroke-width="2" marker-end="url(#s)"/>
+  <text x="330" y="327" text-anchor="middle" font-size="12" fill="#374151">4. get rse.postulaciones</text>
+  <line x1="500" y1="357" x2="162" y2="357" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#s)"/>
+  <text x="330" y="375" text-anchor="middle" font-size="11" fill="#6b7280">payload: {proveedor:EcoAndes SAC, ...}</text>
+
+  <rect x="250" y="392" width="500" height="30" rx="6" fill="#ecfdf5" stroke="#059669"/>
+  <text x="500" y="412" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">Comunicación bidireccional confirmada</text>
+</svg>

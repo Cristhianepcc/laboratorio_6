@@ -1,0 +1,18 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-lab6
+    hostname: rabbitmq-lab6
+    ports:
+      - "5672:5672"     # AMQP (protocolo nativo)
+      - "15672:15672"   # Management UI + HTTP API (lo que usan los conectores REST de Bonita)
+    # Usuario por defecto de la imagen: guest / guest
+    # Declara las colas del lab al arrancar mediante definitions.json
+    volumes:
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

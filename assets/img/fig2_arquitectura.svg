@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="500" viewBox="0 0 1040 500" font-family="'Segoe UI',Arial,sans-serif">
+  <rect width="1040" height="500" fill="#ffffff"/>
+  <text x="520" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#1f2937">Arquitectura basada en eventos — RSE &#8596; RabbitMQ &#8596; Comunidad/Proveedores</text>
+
+  <!-- Proceso 1 -->
+  <rect x="30" y="90" width="250" height="300" rx="12" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="155" y="120" text-anchor="middle" font-size="15" font-weight="700" fill="#3730a3">Proceso 1</text>
+  <text x="155" y="142" text-anchor="middle" font-size="13" fill="#3730a3">Gestión de RSE y</text>
+  <text x="155" y="160" text-anchor="middle" font-size="13" fill="#3730a3">Sostenibilidad (Bonita)</text>
+  <rect x="55" y="190" width="200" height="46" rx="8" fill="#ffffff" stroke="#6366f1"/>
+  <text x="155" y="212" text-anchor="middle" font-size="12" fill="#312e81">tarea: Notificar áreas</text>
+  <text x="155" y="228" text-anchor="middle" font-size="12" fill="#312e81">y aliados (tnotif)</text>
+  <rect x="55" y="256" width="200" height="46" rx="8" fill="#ffffff" stroke="#6366f1"/>
+  <text x="155" y="278" text-anchor="middle" font-size="12" fill="#312e81">tarea: Recibir</text>
+  <text x="155" y="294" text-anchor="middle" font-size="12" fill="#312e81">postulaciones</text>
+
+  <!-- Proceso 2 -->
+  <rect x="760" y="90" width="250" height="300" rx="12" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+  <text x="885" y="120" text-anchor="middle" font-size="15" font-weight="700" fill="#065f46">Proceso 2</text>
+  <text x="885" y="142" text-anchor="middle" font-size="13" fill="#065f46">Comunidad /</text>
+  <text x="885" y="160" text-anchor="middle" font-size="13" fill="#065f46">Proveedores (Bonita)</text>
+  <rect x="785" y="190" width="200" height="46" rx="8" fill="#ffffff" stroke="#10b981"/>
+  <text x="885" y="212" text-anchor="middle" font-size="12" fill="#065f46">recibir convocatoria</text>
+  <text x="885" y="228" text-anchor="middle" font-size="12" fill="#065f46">(REST get)</text>
+  <rect x="785" y="256" width="200" height="46" rx="8" fill="#ffffff" stroke="#10b981"/>
+  <text x="885" y="278" text-anchor="middle" font-size="12" fill="#065f46">enviar postulación</text>
+  <text x="885" y="294" text-anchor="middle" font-size="12" fill="#065f46">(REST publish)</text>
+
+  <!-- Cola 1: convocatorias (P1 -> P2) -->
+  <g>
+    <ellipse cx="520" cy="170" rx="90" ry="16" fill="#fde68a" stroke="#d97706"/>
+    <rect x="430" y="170" width="180" height="50" fill="#fde68a" stroke="#d97706"/>
+    <ellipse cx="520" cy="220" rx="90" ry="16" fill="#fcd34d" stroke="#d97706"/>
+    <text x="520" y="200" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e">rse.convocatorias</text>
+  </g>
+  <!-- Cola 2: postulaciones (P2 -> P1) -->
+  <g>
+    <ellipse cx="520" cy="300" rx="90" ry="16" fill="#bfdbfe" stroke="#2563eb"/>
+    <rect x="430" y="300" width="180" height="50" fill="#bfdbfe" stroke="#2563eb"/>
+    <ellipse cx="520" cy="350" rx="90" ry="16" fill="#93c5fd" stroke="#2563eb"/>
+    <text x="520" y="330" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">rse.postulaciones</text>
+  </g>
+
+  <!-- Flechas fila superior: P1 -> cola1 -> P2 -->
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#374151"/></marker>
+  </defs>
+  <line x1="280" y1="195" x2="425" y2="195" stroke="#374151" stroke-width="2" marker-end="url(#ah)"/>
+  <text x="352" y="186" text-anchor="middle" font-size="12" fill="#374151">publish</text>
+  <line x1="615" y1="195" x2="758" y2="195" stroke="#374151" stroke-width="2" marker-end="url(#ah)"/>
+  <text x="686" y="186" text-anchor="middle" font-size="12" fill="#374151">get</text>
+
+  <!-- Flechas fila inferior: P2 -> cola2 -> P1 -->
+  <line x1="758" y1="325" x2="615" y2="325" stroke="#374151" stroke-width="2" marker-end="url(#ah)"/>
+  <text x="686" y="316" text-anchor="middle" font-size="12" fill="#374151">publish</text>
+  <line x1="425" y1="325" x2="282" y2="325" stroke="#374151" stroke-width="2" marker-end="url(#ah)"/>
+  <text x="352" y="316" text-anchor="middle" font-size="12" fill="#374151">get</text>
+
+  <!-- Banda RabbitMQ -->
+  <rect x="360" y="420" width="320" height="46" rx="8" fill="#f3f4f6" stroke="#9ca3af"/>
+  <text x="520" y="449" text-anchor="middle" font-size="14" font-weight="700" fill="#4b5563">RabbitMQ (Docker &#183; HTTP API :15672)</text>
+  <line x1="520" y1="360" x2="520" y2="418" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+</svg>

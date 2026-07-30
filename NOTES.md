@@ -50,4 +50,6 @@ REST aquí implementado. Alternativas a documentar/probar si sobra tiempo:
 - [ ] Modelar el Proceso 2 en Bonita Studio a partir de `comunidad-proveedores/README.md`.
 - [ ] Añadir los 2 conectores REST al `.bos` del Proceso 1 (ver `CONECTORES_RABBITMQ.md`).
 - [ ] Capturas de la ejecución en el Portal y de la cola en `http://localhost:15672` → `docs/`.
-- [ ] Subir el repo `laboratorio_6` a GitHub.
+- [x] Subir el repo `laboratorio_6` a GitHub → https://github.com/Cristhianepcc/laboratorio_6
+- [x] Insertar Fig. 2 (arquitectura), Fig. 5 (BPMN Proceso 2) y Fig. 8bis (secuencia) en `Informe_Lab6_RSE.docx`.
+  Quedan 6 placeholders reales que requieren capturas de la GUI de Bonita/RabbitMQ (Fig. 1, 3, 4, 6, 7, 9).

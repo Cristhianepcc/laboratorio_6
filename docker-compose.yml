@@ -16,3 +16,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # Servidor de correo local para el conector Email de Bonita.
+  # Captura todo lo que se le envia y lo muestra en una bandeja web, asi la
+  # integracion con correo se demuestra sin cuentas reales ni salida a internet.
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog-tif
+    ports:
+      - "1025:1025"   # SMTP: lo que configura el conector Email de Bonita
+      - "8025:8025"   # Bandeja web: http://localhost:8025

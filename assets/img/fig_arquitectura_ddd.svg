@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="760" viewBox="0 0 1300 760" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect width="1300" height="760" fill="#ffffff"/>
+  <defs>
+    <marker id="f1" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto">
+      <polygon points="0 0, 11 4.5, 0 9" fill="#453080"/>
+    </marker>
+    <marker id="f2" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto">
+      <polygon points="0 0, 11 4.5, 0 9" fill="#b03030"/>
+    </marker>
+  </defs>
+
+  <text x="650" y="44" text-anchor="middle" font-size="26" font-weight="bold" fill="#1f3b73">Arquitectura por capas con Domain-driven Design</text>
+  <text x="650" y="72" text-anchor="middle" font-size="15" fill="#666">Un paquete por bounded context: src/&lt;contexto&gt;/</text>
+
+  <!-- PRESENTACIÓN -->
+  <rect x="120" y="100" width="1060" height="112" rx="8" fill="#eaf0fa" stroke="#5b7fb5" stroke-width="2.5"/>
+  <text x="145" y="128" font-size="17" font-weight="bold" fill="#1f3b73">presentation — adaptadores de entrada</text>
+  <rect x="150" y="140" width="300" height="56" rx="5" fill="#ffffff" stroke="#5b7fb5"/>
+  <text x="300" y="163" text-anchor="middle" font-size="14" fill="#333">Controladores REST</text>
+  <text x="300" y="183" text-anchor="middle" font-size="12" fill="#777">Blueprints de Flask · HTTP</text>
+  <rect x="480" y="140" width="300" height="56" rx="5" fill="#ffffff" stroke="#5b7fb5"/>
+  <text x="630" y="163" text-anchor="middle" font-size="14" fill="#333">Manejadores de evento</text>
+  <text x="630" y="183" text-anchor="middle" font-size="12" fill="#777">consumidor AMQP · RabbitMQ</text>
+  <rect x="810" y="140" width="330" height="56" rx="5" fill="#ffffff" stroke="#5b7fb5"/>
+  <text x="975" y="163" text-anchor="middle" font-size="14" fill="#333">Frontend web (postventa)</text>
+  <text x="975" y="183" text-anchor="middle" font-size="12" fill="#777">plantillas · sesión por rol</text>
+
+  <!-- APLICACIÓN -->
+  <rect x="120" y="240" width="1060" height="98" rx="8" fill="#eef7f0" stroke="#3f9160" stroke-width="2.5"/>
+  <text x="145" y="268" font-size="17" font-weight="bold" fill="#20603a">application — casos de uso</text>
+  <rect x="150" y="280" width="990" height="44" rx="5" fill="#ffffff" stroke="#3f9160"/>
+  <text x="645" y="300" text-anchor="middle" font-size="14" fill="#333">Servicios de aplicación: IniciativaServicio · CarritoServicio · InventarioServicio · ReclamoServicio</text>
+  <text x="645" y="317" text-anchor="middle" font-size="12" fill="#777">Orquestan dominio y persistencia. No contienen reglas de negocio.</text>
+
+  <!-- DOMINIO -->
+  <rect x="120" y="366" width="1060" height="200" rx="8" fill="#fff8ec" stroke="#c99b3f" stroke-width="3"/>
+  <text x="145" y="394" font-size="17" font-weight="bold" fill="#8a5a00">domain — el corazón del modelo</text>
+  <text x="145" y="414" font-size="12" fill="#8a5a00">Python puro: no importa Flask ni SQLAlchemy</text>
+
+  <rect x="150" y="426" width="228" height="60" rx="5" fill="#ffffff" stroke="#c99b3f"/>
+  <text x="264" y="448" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Entidades</text>
+  <text x="264" y="468" text-anchor="middle" font-size="11" fill="#777">IniciativaRSE · Carrito</text>
+  <text x="264" y="482" text-anchor="middle" font-size="11" fill="#777">ProductoInventario · Reclamo</text>
+
+  <rect x="396" y="426" width="228" height="60" rx="5" fill="#ffffff" stroke="#c99b3f"/>
+  <text x="510" y="448" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Objetos de valor</text>
+  <text x="510" y="468" text-anchor="middle" font-size="11" fill="#777">IndicadorKPI · EvidenciaAvance</text>
+  <text x="510" y="482" text-anchor="middle" font-size="11" fill="#777">EventoIntegracion (inmutable)</text>
+
+  <rect x="642" y="426" width="228" height="60" rx="5" fill="#ffffff" stroke="#c99b3f"/>
+  <text x="756" y="448" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Agregados</text>
+  <text x="756" y="468" text-anchor="middle" font-size="11" fill="#777">IniciativaRSE como raíz:</text>
+  <text x="756" y="482" text-anchor="middle" font-size="11" fill="#777">KPIs · evidencias · reporte</text>
+
+  <rect x="888" y="426" width="252" height="60" rx="5" fill="#ffffff" stroke="#c99b3f"/>
+  <text x="1014" y="448" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Servicios de dominio</text>
+  <text x="1014" y="468" text-anchor="middle" font-size="11" fill="#777">EvaluadorDeMetas</text>
+  <text x="1014" y="482" text-anchor="middle" font-size="11" fill="#777">gateway «¿Metas cumplidas?»</text>
+
+  <rect x="150" y="498" width="474" height="52" rx="5" fill="#ffffff" stroke="#c99b3f"/>
+  <text x="387" y="519" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Fábricas</text>
+  <text x="387" y="538" text-anchor="middle" font-size="11" fill="#777">IniciativaFabrica · CarritoFabrica · ProductoFabrica · ReclamoFabrica</text>
+
+  <rect x="642" y="498" width="498" height="52" rx="5" fill="#ffffff" stroke="#c99b3f" stroke-dasharray="6,4"/>
+  <text x="891" y="519" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Repositorios (PUERTOS — interfaces abstractas)</text>
+  <text x="891" y="538" text-anchor="middle" font-size="11" fill="#777">IIniciativaRepositorio · ICarritoRepositorio · IReclamoRepositorio</text>
+
+  <!-- INFRAESTRUCTURA -->
+  <rect x="120" y="594" width="1060" height="100" rx="8" fill="#f4f2fb" stroke="#6a51c4" stroke-width="2.5"/>
+  <text x="145" y="622" font-size="17" font-weight="bold" fill="#453080">infrastructure — adaptadores de salida</text>
+  <rect x="150" y="634" width="316" height="46" rx="5" fill="#ffffff" stroke="#6a51c4"/>
+  <text x="308" y="654" text-anchor="middle" font-size="13" fill="#333">Repositorio SQLAlchemy</text>
+  <text x="308" y="671" text-anchor="middle" font-size="11" fill="#777">PostgreSQL · mapeo ORM</text>
+  <rect x="486" y="634" width="316" height="46" rx="5" fill="#ffffff" stroke="#6a51c4"/>
+  <text x="644" y="654" text-anchor="middle" font-size="13" fill="#333">Repositorio en memoria</text>
+  <text x="644" y="671" text-anchor="middle" font-size="11" fill="#777">doble de prueba · sin BD</text>
+  <rect x="822" y="634" width="318" height="46" rx="5" fill="#ffffff" stroke="#6a51c4"/>
+  <text x="981" y="654" text-anchor="middle" font-size="13" fill="#333">Adaptador RabbitMQ</text>
+  <text x="981" y="671" text-anchor="middle" font-size="11" fill="#777">publicador · consumidor AMQP</text>
+
+  <!-- flechas de dependencia -->
+  <path d="M 90 156 L 90 700" stroke="#453080" stroke-width="0" fill="none"/>
+  <path d="M 650 212 L 650 236" stroke="#453080" stroke-width="3" fill="none" marker-end="url(#f1)"/>
+  <path d="M 650 338 L 650 362" stroke="#453080" stroke-width="3" fill="none" marker-end="url(#f1)"/>
+  <path d="M 1210 660 L 1245 660 L 1245 528 L 1150 528" stroke="#b03030" stroke-width="3" fill="none" marker-end="url(#f2)"/>
+  <text x="1262" y="600" font-size="12" font-weight="bold" fill="#b03030" transform="rotate(-90 1262 600)">implementa el puerto</text>
+
+  <!-- nota de dependencia -->
+  <rect x="30" y="240" width="72" height="326" rx="6" fill="#f7f7f7" stroke="#bbb"/>
+  <text x="66" y="410" text-anchor="middle" font-size="13" font-weight="bold" fill="#444" transform="rotate(-90 66 410)">LA DEPENDENCIA APUNTA HACIA ADENTRO</text>
+
+  <text x="650" y="726" text-anchor="middle" font-size="13" fill="#555">El dominio define la interfaz del repositorio y la infraestructura la implementa (inversión de dependencias, la D de SOLID):</text>
+  <text x="650" y="746" text-anchor="middle" font-size="13" fill="#555">el mismo caso de uso corre contra PostgreSQL o contra un doble en memoria sin cambiar una línea.</text>
+</svg>

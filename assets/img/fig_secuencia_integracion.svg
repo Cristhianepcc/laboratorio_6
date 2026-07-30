@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="800" viewBox="0 0 1360 800" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect width="1360" height="800" fill="#ffffff"/>
+  <defs>
+    <marker id="s1" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#333"/>
+    </marker>
+    <marker id="s2" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#3f9160"/>
+    </marker>
+    <marker id="s3" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#1f3b73"/>
+    </marker>
+  </defs>
+
+  <text x="680" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#1f3b73">Secuencia de integración: proceso BPM ↔ servicios web</text>
+  <text x="680" y="66" text-anchor="middle" font-size="14" fill="#666">Ciclo completo de una convocatoria RSE, desde Bonita hasta el dominio y de vuelta</text>
+
+  <!-- actores -->
+  <g font-size="13" font-weight="bold" fill="#fff" text-anchor="middle">
+    <rect x="40" y="92" width="180" height="46" rx="5" fill="#c99b3f"/><text x="130" y="113">Proceso 1 (Bonita)</text><text x="130" y="129" font-size="11" font-weight="normal">Gestión de RSE</text>
+    <rect x="262" y="92" width="180" height="46" rx="5" fill="#8a6fb0"/><text x="352" y="113">Servidor de correo</text><text x="352" y="129" font-size="11" font-weight="normal">SMTP</text>
+    <rect x="484" y="92" width="180" height="46" rx="5" fill="#3f9160"/><text x="574" y="113">RabbitMQ</text><text x="574" y="129" font-size="11" font-weight="normal">broker</text>
+    <rect x="706" y="92" width="180" height="46" rx="5" fill="#c99b3f"/><text x="796" y="113">Proceso 2 (Bonita)</text><text x="796" y="129" font-size="11" font-weight="normal">Proveedores</text>
+    <rect x="928" y="92" width="180" height="46" rx="5" fill="#6a51c4"/><text x="1018" y="113">Worker / API</text><text x="1018" y="129" font-size="11" font-weight="normal">servicios web</text>
+    <rect x="1150" y="92" width="170" height="46" rx="5" fill="#453080"/><text x="1235" y="113">Dominio</text><text x="1235" y="129" font-size="11" font-weight="normal">agregado + reglas</text>
+  </g>
+
+  <!-- lineas de vida -->
+  <g stroke="#bbb" stroke-width="1.5" stroke-dasharray="5,5">
+    <line x1="130" y1="138" x2="130" y2="742"/>
+    <line x1="352" y1="138" x2="352" y2="742"/>
+    <line x1="574" y1="138" x2="574" y2="742"/>
+    <line x1="796" y1="138" x2="796" y2="742"/>
+    <line x1="1018" y1="138" x2="1018" y2="742"/>
+    <line x1="1235" y1="138" x2="1235" y2="742"/>
+  </g>
+
+  <!-- 1 correo -->
+  <line x1="130" y1="180" x2="345" y2="180" stroke="#8a6fb0" stroke-width="2.5" marker-end="url(#s1)"/>
+  <text x="238" y="172" text-anchor="middle" font-size="12" fill="#5b3f86" font-weight="bold">1. conector Email: notifica la convocatoria</text>
+  <circle cx="126" cy="180" r="5" fill="#c99b3f"/>
+
+  <!-- 2 publica convocatoria -->
+  <line x1="130" y1="226" x2="567" y2="226" stroke="#3f9160" stroke-width="2.5" marker-end="url(#s2)"/>
+  <text x="350" y="218" text-anchor="middle" font-size="12" fill="#20603a" font-weight="bold">2. conector REST: publica en rse.convocatorias</text>
+
+  <!-- 3 consume worker -->
+  <line x1="574" y1="272" x2="1011" y2="272" stroke="#3f9160" stroke-width="2.5" marker-end="url(#s2)"/>
+  <text x="792" y="264" text-anchor="middle" font-size="12" fill="#20603a" font-weight="bold">3. el worker consume el mensaje</text>
+
+  <!-- 4 dominio -->
+  <line x1="1018" y1="318" x2="1228" y2="318" stroke="#453080" stroke-width="2.5" marker-end="url(#s1)"/>
+  <text x="1123" y="310" text-anchor="middle" font-size="12" fill="#453080" font-weight="bold">4. sincroniza la iniciativa</text>
+  <text x="1123" y="336" text-anchor="middle" font-size="11" fill="#777">idempotente</text>
+
+  <!-- 5 P2 consume convocatoria -->
+  <line x1="574" y1="378" x2="789" y2="378" stroke="#3f9160" stroke-width="2.5" marker-end="url(#s2)"/>
+  <text x="682" y="370" text-anchor="middle" font-size="12" fill="#20603a" font-weight="bold">5. el Proceso 2 recibe la convocatoria</text>
+
+  <!-- 6 P2 publica postulacion -->
+  <line x1="796" y1="424" x2="581" y2="424" stroke="#3f9160" stroke-width="2.5" marker-end="url(#s2)"/>
+  <text x="688" y="416" text-anchor="middle" font-size="12" fill="#20603a" font-weight="bold">6. publica en rse.postulaciones</text>
+
+  <!-- 7 worker consume -->
+  <line x1="574" y1="470" x2="1011" y2="470" stroke="#3f9160" stroke-width="2.5" marker-end="url(#s2)"/>
+  <text x="792" y="462" text-anchor="middle" font-size="12" fill="#20603a" font-weight="bold">7. el worker consume la postulación</text>
+
+  <!-- 8 registra evidencia -->
+  <line x1="1018" y1="516" x2="1228" y2="516" stroke="#453080" stroke-width="2.5" marker-end="url(#s1)"/>
+  <text x="1123" y="508" text-anchor="middle" font-size="12" fill="#453080" font-weight="bold">8. registra evidencia</text>
+
+  <!-- 9 publica notificacion -->
+  <line x1="1018" y1="562" x2="581" y2="562" stroke="#3f9160" stroke-width="2.5" marker-end="url(#s2)"/>
+  <text x="800" y="554" text-anchor="middle" font-size="12" fill="#20603a" font-weight="bold">9. publica en rse.notificaciones</text>
+
+  <!-- 10 P1 consume -->
+  <line x1="574" y1="608" x2="137" y2="608" stroke="#3f9160" stroke-width="2.5" marker-end="url(#s2)"/>
+  <text x="356" y="600" text-anchor="middle" font-size="12" fill="#20603a" font-weight="bold">10. el Proceso 1 consume el resultado</text>
+
+  <!-- 11 REST sincrono -->
+  <line x1="130" y1="662" x2="1011" y2="662" stroke="#1f3b73" stroke-width="2.5" marker-end="url(#s3)"/>
+  <text x="570" y="654" text-anchor="middle" font-size="12" fill="#1f3b73" font-weight="bold">11. conector REST síncrono: GET /api/iniciativas/{codigo}/cumplimiento</text>
+
+  <!-- 12 respuesta -->
+  <line x1="1018" y1="708" x2="137" y2="708" stroke="#1f3b73" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#s3)"/>
+  <text x="570" y="700" text-anchor="middle" font-size="12" fill="#1f3b73" font-weight="bold">12. respuesta: cumplidas · porcentajeGlobal · rezagados → decide el gateway «¿Metas cumplidas?»</text>
+
+  <!-- nota -->
+  <rect x="40" y="748" width="1280" height="40" rx="5" fill="#f7f9fc" stroke="#c3d3ea"/>
+  <text x="680" y="773" text-anchor="middle" font-size="12.5" fill="#444">Los pasos 2–10 son asíncronos y desacoplan el proceso del servicio: si uno está caído, el mensaje espera en la cola. El paso 11 es síncrono porque el proceso necesita la respuesta para decidir el camino.</text>
+</svg>

@@ -199,8 +199,7 @@ Este bounded context expone **cinco recursos** y un frontend web propio con cont
 | `/api/soluciones` | `GET` · `POST` | Técnico |
 | `/api/notificaciones` | `POST` | Sistema |
 
-**Máquina de estados del reclamo** — las transiciones válidas las conoce el agregado, no la
-interfaz:
+**Máquina de estados del reclamo**, recorrida por los tres roles:
 
 ```
 REGISTRADO ──validación──► EN_EVALUACION ──evaluación + solución──► RESUELTO
@@ -216,7 +215,13 @@ REGISTRADO ──validación──► EN_EVALUACION ──evaluación + solució
 | `TECNICO` | Registrar evaluaciones y aplicar soluciones |
 
 > El frontend **no contiene lógica de negocio**: consume los mismos servicios REST que
-> consumiría cualquier otro cliente, incluidos los conectores de Bonita.
+> consumiría cualquier otro cliente, incluidos los conectores de Bonita. La validación de los
+> datos del reclamo vive en `ReclamoFabrica`, en la capa de dominio.
+>
+> **Deuda reconocida:** a diferencia de `IniciativaRSE` —que encapsula sus invariantes en
+> métodos como `evaluar()`—, el agregado `Reclamo` es todavía anémico: las transiciones de
+> estado las aplica el servicio de aplicación en vez del agregado. Está registrado en el
+> tablero, junto al método `actualizar()` de 16 parámetros que es su síntoma.
 
 **Modelos:** agregado `Reclamo` (raíz) · `ReclamoFabrica` · puerto `IReclamoRepositorio`.
 

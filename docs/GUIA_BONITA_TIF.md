@@ -35,38 +35,29 @@ Esto deja corriendo:
 | RabbitMQ | `5672` / `15672` | Broker de mensajes | <http://localhost:15672> (`guest`/`guest`) |
 | MailHog | `1025` / `8025` | Servidor SMTP de pruebas | <http://localhost:8025> |
 
-Y en el repositorio de servicios (`sodimac-servicios-rest`):
+Y en el repositorio de servicios (`sodimac-servicios-rest`), **un solo comando**:
 
 ```bash
-docker compose up -d       # PostgreSQL en :5432
-cp .env.example .env
+./scripts/demo_up.sh
 ```
 
-Luego, en **dos terminales**:
+Levanta y **verifica** las cinco piezas: RabbitMQ, servidor de correo, PostgreSQL,
+API REST y worker de eventos. Si algo no queda operativo se detiene y dice qué falló,
+en vez de dejar la demo a medias. Termina publicando una convocatoria igual que el
+conector de Bonita y comprobando que la API la sirve.
+
+Salida esperada: **5/5 en verde**, acabando en
+`El worker la sincronizó y la API la sirve — integración COMPLETA`.
 
 ```bash
-# terminal 1 — API REST en :5000, Swagger en /docs
-REPO_BACKEND=sqlalchemy python run.py
-
-# terminal 2 — consumidor de las colas
-REPO_BACKEND=sqlalchemy EVENTOS_BACKEND=rabbitmq python worker.py
+./scripts/seed_demo.sh    # datos de demo: iniciativa aprobada con KPIs
+./scripts/demo_down.sh    # apagar todo
 ```
 
-> ### ⚠️ `REPO_BACKEND=sqlalchemy` es obligatorio en AMBOS
->
-> La API y el worker son **dos procesos distintos**. Con el backend por defecto
-> (`memoria`) cada uno tiene su propio repositorio en RAM: el worker sincroniza la
-> iniciativa que envía Bonita y **la API responde 404**, porque no comparten estado.
->
-> Esto está verificado: con `memoria` el flujo falla; con PostgreSQL apuntando ambos a
-> la misma base, funciona de extremo a extremo. El backend en memoria sirve para las
-> pruebas unitarias, no para la demo.
->
-> Comprobar antes de empezar: `curl -s localhost:5000/health` debe decir
-> `{"backend":"sqlalchemy"}`. Si dice `memoria`, la demo no va a funcionar.
->
-> Si el puerto 5432 está ocupado por otro proyecto, cambia el mapeo en
-> `docker-compose.yml` (p. ej. `"5433:5432"`) y ajusta `DATABASE_URL` en el `.env`.
+> El script exporta `REPO_BACKEND=sqlalchemy` en la API y en el worker, que es
+> obligatorio: son procesos distintos y con el repositorio en memoria no comparten
+> estado (la API respondería 404 a lo que el worker sincroniza). El worker ahora se
+> niega a arrancar mal configurado en vez de fallar en silencio.
 
 Colas declaradas automáticamente: `rse.convocatorias`, `rse.postulaciones` y
 `rse.notificaciones`.

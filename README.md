@@ -296,17 +296,44 @@ lista de verificación.
 
 ### Calidad de código
 
-Análisis con **SonarQube Community** sobre el repositorio de servicios:
+El repositorio de servicios se analiza con **SonarQube Community** en cada integración. La
+medición es continua, no puntual: cada merge se vuelve a analizar y los hallazgos nuevos entran
+al tablero como tarjetas de corrección.
 
-| Métrica | Valor |
-| --- | --- |
-| Líneas analizadas | 2 010 |
-| Bugs · Vulnerabilidades · Code smells | 0 · 0 · 0 |
-| Duplicación | 0.0 % |
-| Deuda técnica | 0 min |
-| Fiabilidad · Seguridad · Mantenibilidad | **A · A · A** |
+| Métrica | Núcleo *(antes de integrar postventa)* | **Estado actual** |
+| --- | --- | --- |
+| Líneas analizadas | 2 010 | 2 628 |
+| Bugs | 0 | 0 |
+| Vulnerabilidades | 0 | 1 |
+| Code smells | 0 | 6 |
+| Duplicación | 0.0 % | 0.0 % |
+| Deuda técnica | 0 min | 47 min |
+| Fiabilidad · Seguridad · Mantenibilidad | A · A · A | A · D · A |
 
-El primer análisis reportó 6 Critical, 2 Major y 2 Minor; todos corregidos. Detalle en
+**Trayectoria.** El primer análisis del núcleo dio **6 Critical, 2 Major y 2 Minor**; se
+corrigieron todos hasta dejarlo en cero: literales duplicados extraídos a constantes, una
+función con complejidad cognitiva 16 descompuesta en cuatro, y un parámetro que viajaba del
+controlador al dominio y se descartaba en silencio —el comentario del comité al evaluar una
+iniciativa— que pasó a persistirse.
+
+**Hallazgos abiertos.** La integración del módulo de postventa y su frontend web añadió 618
+líneas y con ellas 5 Critical y 1 Major, todos registrados en el tablero:
+
+| Severidad | Hallazgo | Dónde |
+| --- | --- | --- |
+| Critical | Protección CSRF ausente en los formularios web | `src/__init__.py` |
+| Critical | Complejidad cognitiva 17 (máx. 15) | `postventa/application/reclamo_servicio.py` |
+| Critical | `datetime.utcnow()` obsoleto desde Python 3.12 (×2) | `postventa/application/reclamo_servicio.py` |
+| Critical | Literal duplicado 5 veces | `web/presentation/web_controller.py` |
+| Major | Método con 16 parámetros (máx. 13) | `postventa/application/reclamo_servicio.py` |
+
+> El hallazgo de CSRF **no era aplicable** mientras el proyecto era solo una API REST sin
+> cookies de sesión: sus clientes eran los conectores de Bonita y el worker, no un navegador.
+> Dejó de ser un falso positivo al incorporarse el frontend web con `session["usuario"]` y
+> formularios `POST`. La protección debe aplicarse **solo** al blueprint web, dejando fuera la
+> API para no romper a los conectores.
+
+Metodología reproducible y detalle de las correcciones en
 [`docs/CALIDAD.md`](https://github.com/Cristhianepcc/sodimac-servicios-rest/blob/main/docs/CALIDAD.md).
 
 ---
